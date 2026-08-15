@@ -1,5 +1,5 @@
 /* 소윤 로블록스 레전드 — 오프라인 캐시 서비스워커 */
-const CACHE = 'soyoon-quest-v1';
+const CACHE = 'soyoon-quest-v2';
 const ASSETS = [
   './',
   'index.html',
