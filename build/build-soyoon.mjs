@@ -168,15 +168,15 @@ R('🥄 한윤재 전설이 되다 (중1 2학기)','🎮 소윤 로블록스 레
 R('<span id="rankIco">🥄</span>','<span id="rankIco">🐣</span>');
 R('<div class="rank-name" id="rankName">이등병 한윤재</div>','<div class="rank-name" id="rankName">뉴비</div>');
 R('<span class="rg-name">한윤재</span>','<span class="rg-name">소윤</span>');
-R('(전부 완료 시 정확히 1000元)','(목표 20000원 · 모두 완료 시 21000원)');
+R('(전부 완료 시 정확히 1000元)','(목표 50000원 · 모두 완료 시 52500원)');
 
 // config
 R('var FIREBASE_DB = "";','var FIREBASE_DB = "https://learning-soyun-default-rtdb.firebaseio.com";');
 R('var KEY = "chwisabyeong_s2_v1";','var KEY = "soyoon_plan_v1";');
 R('var ROLE_KEY = "chwisabyeong_role";','var ROLE_KEY = "soyoon_role";');
 R('FIREBASE_DB.replace(/\\/+$/,"") + "/hanyunjae_s2.json"','FIREBASE_DB.replace(/\\/+$/,"") + "/soyoon.json"');
-R('var DEF = { rDay:5, rQuiz:25, rMock:30, goal:1000 };','var DEF = { rDay:200, rQuiz:800, rMock:1000, goal:20000 };');
-R('var REWARD_VERSION = 3;','var REWARD_VERSION = 2;');
+R('var DEF = { rDay:5, rQuiz:25, rMock:30, goal:1000 };','var DEF = { rDay:500, rQuiz:2000, rMock:2500, goal:50000 };');
+R('var REWARD_VERSION = 3;','var REWARD_VERSION = 4;');
 R('return { name:"한윤재", days:{}','return { name:"소윤", days:{}');
 R('if (!s.name) s.name="한윤재";','if (!s.name) s.name="소윤";');
 
@@ -205,8 +205,14 @@ if (miss) { console.log('MISSED', miss, 'replacements — aborting'); process.ex
 fs.writeFileSync(OUT, html, 'utf8');
 let days=0,unit=0,mock=0,q=0;
 SUBJECTS.forEach(su=>su.days.forEach(x=>{days++;if(x.quiz){if(x.quiz.kind==='mock')mock++;else unit++;q+=x.quiz.z.length;}}));
-console.log('wrote', OUT, html.length, 'bytes');
+console.log('wrote', OUT, Buffer.byteLength(html, 'utf8'), 'bytes');
 console.log('subjects', SUBJECTS.length, 'days', days, 'unitQuiz', unit, 'mockQuiz', mock, 'totalQ', q);
-console.log('full-completion reward:', days*200 + unit*800 + mock*1000, '원 (goal 20000)');
+// 보상 기본값은 위 DEF 치환과 반드시 일치시킬 것
+const DEF_OUT = html.match(/var DEF = \{ rDay:(\d+), rQuiz:(\d+), rMock:(\d+), goal:(\d+) \};/);
+if (!DEF_OUT) { console.log('PROBLEM: DEF 치환 실패'); process.exit(1); }
+const [, rDay, rQuiz, rMock, goal] = DEF_OUT.map(Number);
+const maxReward = days*rDay + unit*rQuiz + mock*rMock;
+console.log('full-completion reward:', maxReward, `원 (goal ${goal})`);
+if (maxReward < goal) { console.log('PROBLEM: 전부 완료해도 목표에 못 미침'); process.exit(1); }
 console.log('stray 元:', (html.match(/元/g)||[]).length);
 console.log('stray 한윤재:', (html.match(/한윤재/g)||[]).length, '· stray 취사:', (html.match(/취사/g)||[]).length, '· stray olive-hex F3EEDF:', html.includes('#F3EEDF'));

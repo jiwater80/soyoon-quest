@@ -33,7 +33,7 @@ build/
 node build/build-soyoon.mjs && node build/build-soyoon-pwa.mjs
 ```
 
-`build-soyoon.mjs`는 통과 시 문항 검증 결과와 정답 인덱스 분포를 출력하고, 검증 실패 시 `exit 1`. 출력의 "N bytes"는 실제로 JS 문자열 길이(문자 수)이며 UTF-8 바이트 수가 아닙니다.
+`build-soyoon.mjs`는 문항 검증(형식·개수·해설 존재), 보상 검증(전부 완료 시 목표 달성 가능 여부), 잔재 문자열 검사(元·한윤재 등)를 하고 실패 시 `exit 1`.
 
 빌드는 결정적입니다 — 입력이 같으면 `index.html`이 바이트 단위로 동일하게 재생성됩니다.
 
@@ -46,8 +46,9 @@ node build/build-soyoon.mjs && node build/build-soyoon-pwa.mjs
 
 ## 보상 / 저장
 
-- 통화는 **한국 원(₩)**. 하루 200 + 단원 800 + 총정리 1000, 목표 20000원(전부 완료 시 21000원).
-- 통화·보상 체계를 바꾸면 `REWARD_VERSION`을 올려 마이그레이션시킬 것.
+- 통화는 **한국 원(₩)**. 하루 500 + 단원 2000 + 총정리 2500, 목표 50000원(전부 완료 시 52500원).
+- 보상 기본값은 `build-soyoon.mjs`의 `var DEF = {...}` 치환 한 곳에서만 정의됩니다. 안내 문구(`목표 N원 · 모두 완료 시 M원`)도 같이 고칠 것.
+- **보상·통화·목표를 바꾸면 `REWARD_VERSION`을 반드시 올릴 것.** 안 올리면 기존 사용자의 localStorage에 옛 목표가 그대로 남습니다.
 - localStorage: 진행 `soyoon_plan_v1`, 역할 `soyoon_role`. 3인 역할(소윤/엄마/아빠).
 - 실시간 동기화: Firebase RTDB `https://learning-soyun-default-rtdb.firebaseio.com`, 경로 `/soyoon.json`. URL은 `build-soyoon.mjs`에 하드코딩돼 있습니다(루트 HTML 아님).
 

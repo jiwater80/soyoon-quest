@@ -318,7 +318,7 @@
       <b>📝 확인문제(QUIZ):</b> 단원마다 <b>10문항</b> 확인문제 + 과목 끝에 <b>총정리 20문항</b>. 채점하면 <b>정답과 해설(💡)</b>이 표시돼 바로 복습돼요. <b>80점 이상</b>이면 통과·용돈 지급! <b>80점 미만이면 '영상 다시 보기'를 눌러야만 다시 도전</b>할 수 있어요.<br>
       <b>📺 영상:</b> 각 날짜의 <b>유튜브</b> 버튼으로 그 단원 검색이 열려요. (EBS 중학, 수박씨닷컴 등)<br>
       <b>📚 과목:</b> 수학·과학·사회(한국사) — 초5 2학기 전 범위. 초등 교육과정 기준이며, 교과서 출판사에 따라 단원 순서가 조금 다를 수 있어요.<br>
-      <b>💾 저장:</b> 진행상황은 <b>이 기기에 안전하게 저장</b>됩니다(자동). <b>3인 실시간(엄마·아빠 보기)</b>은 무료 Firebase 연결 시 켜져요. (목표 20000원 · 모두 완료 시 21000원)
+      <b>💾 저장:</b> 진행상황은 <b>이 기기에 안전하게 저장</b>됩니다(자동). <b>3인 실시간(엄마·아빠 보기)</b>은 무료 Firebase 연결 시 켜져요. (목표 50000원 · 모두 완료 시 52500원)
     </p>
   </div>
 </div>
@@ -936,8 +936,8 @@
   var FIREBASE_DB = "https://learning-soyun-default-rtdb.firebaseio.com"; // 예: "https://xxxx-default-rtdb.firebaseio.com"
   var CLOUD = FIREBASE_DB ? (FIREBASE_DB.replace(/\/+$/,"") + "/soyoon.json") : "";
 
-  var DEF = { rDay:200, rQuiz:800, rMock:1000, goal:20000 };
-  var REWARD_VERSION = 2; // 보상 체계 버전 — 바뀌면 기존 저장값을 새 기본값으로 1회 마이그레이션
+  var DEF = { rDay:500, rQuiz:2000, rMock:2500, goal:50000 };
+  var REWARD_VERSION = 4; // 보상 체계 버전 — 바뀌면 기존 저장값을 새 기본값으로 1회 마이그레이션
   var state = load();
   function load() {
     try { var raw = localStorage.getItem(KEY); if (raw) { var s = JSON.parse(raw); return normalize(s); } } catch (e) {}

@@ -53,4 +53,4 @@ ${swReg}
 </html>
 `;
 fs.writeFileSync(OUT, out, 'utf8');
-console.log('wrote', OUT, out.length, 'bytes');
+console.log('wrote', OUT, Buffer.byteLength(out, 'utf8'), 'bytes');
